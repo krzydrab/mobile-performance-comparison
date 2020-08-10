@@ -23,9 +23,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private enum Algorithm { SelectSort, AckermannFunction, GaussElimination };
     private Algorithm algorithm = Algorithm.SelectSort;
 
-    // TODO:
-    //  0. Napisz jakiś generator dla gaussa
-
     public void onStartBtnClicked(View view) {
         AlgorithmTester tester = buildTester();
         AlgorithmTester.Result[] results = tester.testAll(0, 10);
