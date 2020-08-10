@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import SwiftFractal
+//@testable import SwiftFractal
 
 class SwiftFractalTests: XCTestCase {
 
@@ -30,5 +30,4 @@ class SwiftFractalTests: XCTestCase {
             // Put the code you want to measure the time of here.
         }
     }
-
 }

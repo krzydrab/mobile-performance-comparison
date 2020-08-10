@@ -14,6 +14,7 @@
 		D6C9582E24D358020009B18B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D6C9582D24D358020009B18B /* Preview Assets.xcassets */; };
 		D6C9583124D358020009B18B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D6C9582F24D358020009B18B /* LaunchScreen.storyboard */; };
 		D6C9583C24D358020009B18B /* SwiftFractalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C9583B24D358020009B18B /* SwiftFractalTests.swift */; };
+		D6C9584724D35CC20009B18B /* JuliaFractal.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C9584624D35CC20009B18B /* JuliaFractal.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +39,7 @@
 		D6C9583724D358020009B18B /* SwiftFractalTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftFractalTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6C9583B24D358020009B18B /* SwiftFractalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftFractalTests.swift; sourceTree = "<group>"; };
 		D6C9583D24D358020009B18B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D6C9584624D35CC20009B18B /* JuliaFractal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JuliaFractal.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 		D6C9582324D357FE0009B18B /* SwiftFractal */ = {
 			isa = PBXGroup;
 			children = (
+				D6C9584624D35CC20009B18B /* JuliaFractal.swift */,
 				D6C9582424D357FE0009B18B /* AppDelegate.swift */,
 				D6C9582624D357FE0009B18B /* SceneDelegate.swift */,
 				D6C9582824D357FE0009B18B /* ContentView.swift */,
@@ -211,6 +214,7 @@
 				D6C9582524D357FE0009B18B /* AppDelegate.swift in Sources */,
 				D6C9582724D357FE0009B18B /* SceneDelegate.swift in Sources */,
 				D6C9582924D357FE0009B18B /* ContentView.swift in Sources */,
+				D6C9584724D35CC20009B18B /* JuliaFractal.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
