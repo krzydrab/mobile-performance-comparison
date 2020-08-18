@@ -20,13 +20,7 @@ class JuliaFractalView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        // updateTimer =
-        Timer.scheduledTimer(timeInterval: 0.25, target: self, selector: #selector(fireTimer), userInfo: nil, repeats: true);
         self.startTime = Date();
-    }
-
-    @objc func fireTimer() {
-        self.setNeedsDisplay();
     }
     
     func createBitmapContext(pixelsWide: Int, _ pixelsHigh: Int) -> CGContext? {
@@ -35,13 +29,6 @@ class JuliaFractalView: UIView {
         let bitsPerComponent = 8
 
         let colorSpace = CGColorSpace(name: CGColorSpace.sRGB)!
-
-        // NOTE: alloc method problem
-//        let byteCount = (bytesPerRow * pixelsHigh)
-//        let pixels = UnsafeMutablePointer<CUnsignedChar>.alloc(byteCount)
-//        if pixels == nil {
-//            return nil
-//        }
         let bitmapInfo = CGImageAlphaInfo.premultipliedFirst.rawValue | CGBitmapInfo.byteOrder32Little.rawValue
 
         let context = CGContext(data: nil, width: pixelsWide, height: pixelsHigh, bitsPerComponent: bitsPerComponent, bytesPerRow: bytesPerRow, space: colorSpace, bitmapInfo: bitmapInfo)
@@ -131,17 +118,19 @@ class JuliaFractalView: UIView {
 
 // https://www.hackingwithswift.com/quick-start/swiftui/how-to-wrap-a-custom-uiview-for-swiftui
 struct JuliaFractal: UIViewRepresentable {
+    @Binding var updateTrigger: Bool;
+    
     func makeUIView(context: Context) -> JuliaFractalView {
         return JuliaFractalView(frame: CGRect(x: 100, y: 100, width: CGFloat(300), height: CGFloat(300)))
     }
 
     func updateUIView(_ uiView: JuliaFractalView, context: Context) {
-        
+        uiView.setNeedsDisplay();
     }
 }
 
 struct JuliaFractal_Previews: PreviewProvider {
     static var previews: some View {
-        JuliaFractal()
+        JuliaFractal(updateTrigger: .constant(false))
     }
 }
