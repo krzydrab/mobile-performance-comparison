@@ -88,15 +88,29 @@ class ImagePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final stopwatch = Stopwatch()..start();   
+    // NOTE: this function runs almost in zero time because drawing
+    // is done on separate thread
     canvas.drawImage(image, Offset.zero, Paint());
-    stopwatch.stop();
-    print("Rendering image: ${stopwatch.elapsedMilliseconds}");
+    FPSCalculator.update();
+    print("FPS: ${FPSCalculator.fps}");
   }
 
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {
     return false;
+  }
+}
+
+class FPSCalculator {
+  static Stopwatch stopwatch = Stopwatch();
+  static int fps = 0; 
+
+  static void update() {
+    if (stopwatch.isRunning) {
+      int elapsedTime = (stopwatch..stop()).elapsedMilliseconds;
+      fps = 1000 ~/ elapsedTime;
+    }
+    stopwatch..reset()..start();
   }
 }
 
