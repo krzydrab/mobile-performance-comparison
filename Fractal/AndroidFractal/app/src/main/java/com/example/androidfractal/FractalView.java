@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -33,8 +34,12 @@ public class FractalView extends View {
     }
 
     private void initColorsArray() {
-        this.imageHeight = (int) getMeasuredHeight();
-        this.imageWidth = (int) getMeasuredWidth();
+        // To get size from the template
+        // this.imageHeight = (int) getMeasuredHeight();
+        // this.imageWidth = (int) getMeasuredWidth();
+        this.imageWidth = 300;
+        this.imageHeight = 300;
+        Log.i("custom", "size: " + this.imageHeight + " x " + this.imageWidth);
         this.colors = new int[imageHeight * imageWidth];
     }
 
@@ -59,8 +64,6 @@ public class FractalView extends View {
         int maxIterations = 30;
         int colorsOffset = 0;
 
-        // 1. Uprzadnij kod tutaj!
-        // 2. Opisz przygody z canvasem i bitmapa
 
         for(int y = 0; y < imageHeight; ++y) {
             // Map image coordinates to c on complex plane
@@ -74,7 +77,6 @@ public class FractalView extends View {
 
                 // Set default color
                 colors[colorsOffset] = 0;
-                // this.paint.setColor(Color.BLACK);
 
                 for(int n = 0; n < maxIterations; ++n) {
                     // Z[n+1] = Z[n]^2 + K
@@ -86,7 +88,6 @@ public class FractalView extends View {
 
                     if(Z_re2 + Z_im2 > 4) {
                         colors[colorsOffset] = Color.rgb((int)(n * 8.5), 0, 0);
-                        // this.paint.setColor(Color.rgb((int)(n * 8.5), 0, 0));
                         break;
                     }
 
@@ -95,13 +96,13 @@ public class FractalView extends View {
                 }
 
                 colorsOffset += 1;
-                // canvas.drawPoint(x, y, this.paint);
             }
         }
         Bitmap bitmap = Bitmap.createBitmap(colors, imageWidth, imageHeight, Bitmap.Config.RGB_565);
-        canvas.drawBitmap(bitmap, 0, 0, this.paint);
-        Log.i("custom", "fractal view draw time: " + (System.currentTimeMillis() - t0));
+        Rect dst = new Rect(0, 0, getMeasuredWidth(), getMeasuredHeight());
+        canvas.drawBitmap(bitmap, null, dst, this.paint);
+//        Log.i("custom", "fractal view draw time: " + (System.currentTimeMillis() - t0));
 
-        this.postInvalidateDelayed( 25);
+        this.invalidate();
     }
 }
