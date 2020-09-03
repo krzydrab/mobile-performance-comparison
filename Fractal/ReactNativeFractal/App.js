@@ -4,19 +4,20 @@ import { WebView } from 'react-native-webview';
 import Julia from './src/julia.js';
 
 export default function App() {
-  const [msg, setMsg]= useState("Initializing...");
+  const [fps, setFps]= useState(0);
 
   return (
-    <View style={ { height: 500 } }>
+    <View style={{ height: 500 }}>
       <WebView
+        style={{ margin: 50, width: 1000 }}
         automaticallyAdjustContentInsets={false}
         source={{ html: Julia}}
         javaScriptEnabledAndroid={true}
         onMessage={event => {
-          setMsg(event.nativeEvent.data); 
+          setFps(event.nativeEvent.data); 
         }}
       />
-      <Text>{ msg }</Text>
+      <Text>FPS: { fps }</Text>
     </View>
   );
 }
