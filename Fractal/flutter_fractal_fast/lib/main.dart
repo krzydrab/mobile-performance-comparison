@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:typed_data';
+import 'dart:math';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 
@@ -32,7 +33,7 @@ class _FractalState extends State<Fractal> with SingleTickerProviderStateMixin {
       vsync: this,
     );
 
-    animation = Tween(begin: 0.0, end: 1.0).animate(controller)
+    animation = Tween(begin: 0.0, end: 3.14).animate(controller)
       ..addListener(() {        
         setState(() {
           _kOffset = animation.value;
@@ -124,17 +125,18 @@ Future<ui.Image> generateImage(Size size, double kOffset) async {
   Int32List pixels = Int32List(width * height);
 
   double minRe = -2.0;
-  double maxRe= 1.0;
-  double minIm = -1.2;
-  double maxIm = 1.2;
+  double maxRe= 2.0;
+  double minIm = -1.5;
+  double maxIm = 1.5;
 
   double reFactor = (maxRe-minRe)/(size.width);
   double imFactor = (maxIm-minIm)/(size.height-1);
 
-  double kRe = 0.353 + kOffset;
-  double kIm = 0.288 + kOffset;
+  double kRe = 0.0 + sin(kOffset) * 0.4;
+  double kIm = -0.5 + cos(kOffset) * 0.4;
   int maxIterations = 30;
   int index = 0;
+  int blackColor = Color.fromRGBO(0, 0, 0, 1.0).value;
 
   for(int y = 0; y < size.height; ++y) {
       // Map image coordinates to c on complex plane
@@ -145,7 +147,7 @@ Future<ui.Image> generateImage(Size size, double kOffset) async {
           // Z[0] = c
           var ZRe = cRe;
           var ZIm = cIm;
-          pixels[index] = Color.fromRGBO(255, 255, 255, 1.0).value;
+          pixels[index] = blackColor;
 
           for(int n = 0; n < maxIterations; ++n) {
               // Z[n+1] = Z[n]^2 + K
@@ -156,7 +158,7 @@ Future<ui.Image> generateImage(Size size, double kOffset) async {
               var ZIm2 = ZIm * ZIm;
 
               if(ZRe2 + ZIm2 > 4) {                 
-                  pixels[index] = Color.fromRGBO(n * 8, 0, 0, 1.0).value;
+                  pixels[index] = blackColor | min(60 + n * 10, 255) << 16;
                   break;
               }
 

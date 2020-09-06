@@ -3,7 +3,7 @@ export default `<html>
 <body>
   <div id="cavas-container" style="flex: 1; justify-content: 'center'; align-items: 'center'">
     <div>
-      <canvas id="julia" width="900" height="900"></canvas>
+      <canvas id="julia" width="300" height="300"></canvas>
     </div>
   </div>
 
@@ -12,13 +12,20 @@ export default `<html>
       var canvas = document.querySelector('#julia');
       const startTime = Date.now();
 
-      setInterval(function() {
-        const kOffset = Math.sin((Date.now() - startTime) / 10000.0);
-        const t0 = Date.now();
+      // Counting FPS
+      let frames = 0;
+      const increaseFrames = () => {
+        frames += 1;
+        const kOffset = (Date.now() - startTime) * 0.0005;
         drawJulia(canvas, kOffset);
-        const t1 = Date.now();
-        window.ReactNativeWebView.postMessage("Render time: " + ((t1 - t0) / 1000) + "s")
-      }, 100);
+        requestAnimationFrame(increaseFrames);
+      }
+      increaseFrames();
+  
+      setInterval(() => {
+        window.ReactNativeWebView.postMessage(frames);
+        frames = 0;
+      }, 1000);
 
       function drawJulia(canvas, kOffset) {
         const ctx = canvas.getContext('2d');
@@ -30,15 +37,15 @@ export default `<html>
         const width = canvas.width;
 
         const minRe = -2.0;
-        const maxRe= 1.0;
-        const minIm = -1.2;
-        const maxIm = 1.2;
+        const maxRe= 2.0;
+        const minIm = -1.5;
+        const maxIm = 1.5;
 
         const reFactor = (maxRe-minRe)/(width);
         const imFactor = (maxIm-minIm)/(height-1);
 
-        const kRe = 0.353 + kOffset;
-        const kIm = 0.288 + kOffset;
+        const kRe =  0.0 + Math.sin(kOffset) * 0.4;
+        const kIm = -0.5 + Math.cos(kOffset) * 0.4;
         const maxIterations = 30;
 
         for(var y = 0; y < height; ++y) {
@@ -62,7 +69,7 @@ export default `<html>
               var ZIm2 = ZIm * ZIm;
 
               if(ZRe2 + ZIm2 > 4) {                 
-                color = [n * 8, 0, 0];
+                color = [60 + n * 10, 0, 0];
                 break;
               }
 

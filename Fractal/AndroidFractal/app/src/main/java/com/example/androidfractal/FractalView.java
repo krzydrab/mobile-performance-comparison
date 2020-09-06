@@ -12,6 +12,10 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
+import static java.lang.Math.cos;
+import static java.lang.Math.sin;
+import static java.util.Collections.max;
+
 public class FractalView extends View {
 
     private Paint paint;
@@ -51,16 +55,16 @@ public class FractalView extends View {
         long t0 = System.currentTimeMillis();
 
         double minRe = -2.0;
-        double maxRe= 1.0;
-        double minIm = -1.2;
-        double maxIm = 1.2;//minIm+(maxRe-minRe)*imageHeight/imageWidth;
+        double maxRe= 2.0;
+        double minIm = -1.5;
+        double maxIm = 1.5;
 
         double reFactor = (maxRe-minRe)/(imageWidth-1);
         double imFactor = (maxIm-minIm)/(imageHeight-1);
 
         long elapsedTime = System.currentTimeMillis() - startTime;
-        double k_re = 0.353 + 0.000001*elapsedTime;
-        double k_im = 0.288 + 0.000001*elapsedTime;
+        double k_re = 0.0 + sin(elapsedTime * 0.001) * 0.4;
+        double k_im = -0.5+ cos(elapsedTime * 0.001) * 0.4;
         int maxIterations = 30;
         int colorsOffset = 0;
 
@@ -87,7 +91,7 @@ public class FractalView extends View {
                     double Z_im2 = Z_im * Z_im;
 
                     if(Z_re2 + Z_im2 > 4) {
-                        colors[colorsOffset] = Color.rgb((int)(n * 8.5), 0, 0);
+                        colors[colorsOffset] = Math.min(50 + n * 9, 255) << 16;
                         break;
                     }
 
@@ -101,7 +105,7 @@ public class FractalView extends View {
         Bitmap bitmap = Bitmap.createBitmap(colors, imageWidth, imageHeight, Bitmap.Config.RGB_565);
         Rect dst = new Rect(0, 0, getMeasuredWidth(), getMeasuredHeight());
         canvas.drawBitmap(bitmap, null, dst, this.paint);
-//        Log.i("custom", "fractal view draw time: " + (System.currentTimeMillis() - t0));
+        Log.i("custom", "fractal view draw time: " + (System.currentTimeMillis() - t0));
 
         this.invalidate();
     }

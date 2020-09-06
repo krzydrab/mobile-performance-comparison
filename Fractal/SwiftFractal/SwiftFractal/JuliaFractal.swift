@@ -49,18 +49,18 @@ class JuliaFractalView: UIView {
         let pixels = UnsafeMutablePointer<CUnsignedChar>(opaquePtr)
 
         let startingPoint = Date()
-        let kOffset = sin(startTime.timeIntervalSinceNow / 100.0 * -1);
+        let kOffset = startTime.timeIntervalSinceNow * -1;
         var dataOffset = 0;
 
         let minRe = -2.0;
-        let maxRe = 1.0;
-        let minIm = -1.2;
-        let maxIm = 1.2;
+        let maxRe = 2.0;
+        let minIm = -1.5;
+        let maxIm = 1.5;
         let reFactor = (maxRe-minRe)/Double(width);
         let imFactor = (maxIm-minIm)/Double(height-1);
 
-        let kRe = 0.353 + kOffset;
-        let kIm = 0.288 + kOffset;
+        let kRe = 0.0 + sin(kOffset) * 0.4;
+        let kIm = -0.5 + cos(kOffset) * 0.4;
         let maxIterations = 30;
 
         var y = 0;
@@ -75,7 +75,11 @@ class JuliaFractalView: UIView {
             var ZRe = cRe;
             var ZIm = cIm;
 
-            var color: [UInt8] = [0, 0, 0];
+            // color channels order: BGRA
+            pixels[dataOffset]     = 0;
+            pixels[dataOffset + 1] = 0;
+            pixels[dataOffset + 2] = 0;
+            pixels[dataOffset + 3] = 255;
 
             var n = 0;
             while n < maxIterations {
@@ -87,7 +91,7 @@ class JuliaFractalView: UIView {
               let ZIm2 = ZIm * ZIm;
 
               if(ZRe2 + ZIm2 > 4) {
-                color = [0, 0, UInt8(n * 8)];
+                pixels[dataOffset + 2] = UInt8(min(60 + n * 8, 255));
                 break;
               }
 
@@ -95,11 +99,7 @@ class JuliaFractalView: UIView {
               ZRe = ZRe2 - ZIm2 + kRe;
                 n += 1;
             }
-            // color channels order: BGRA
-            pixels[dataOffset]     = color[0];
-            pixels[dataOffset + 1] = color[1];
-            pixels[dataOffset + 2] = color[2];
-            pixels[dataOffset + 3] = 255;
+
             dataOffset += 4;
             x += 1;
             cRe += reFactor;
