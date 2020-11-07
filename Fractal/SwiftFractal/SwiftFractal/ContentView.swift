@@ -12,12 +12,17 @@ struct ContentView: View {
     // https://medium.com/swlh/swiftui-performance-battle-anyview-vs-group-55bf852158df
     private class FPSCalculator {
         private var lastUpdate: TimeInterval = 0;
+        private var frames = 0;
         private(set) var fps: Int = 0;
-        
+
         func update() {
             let currentUpdate = Date().timeIntervalSinceReferenceDate
-            self.fps = Int(1.0 / (currentUpdate - self.lastUpdate));
-            self.lastUpdate = currentUpdate;
+            if (currentUpdate - lastUpdate >= 1.0) {
+                self.fps = frames
+                self.frames = 0
+                self.lastUpdate = currentUpdate
+            };
+            self.frames += 1
         }
     }
     

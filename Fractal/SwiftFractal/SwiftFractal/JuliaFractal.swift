@@ -37,8 +37,8 @@ class JuliaFractalView: UIView {
     }
 
     override func draw(_ rect: CGRect) {
-        let width  = 300
-        let height = 300
+        let width  = 400
+        let height = 400
         let boundingBox = CGRect(x: 0, y: 0, width: CGFloat(width), height: CGFloat(height))
         let context = createBitmapContext(pixelsWide: width, height)
 
@@ -112,7 +112,7 @@ class JuliaFractalView: UIView {
             currentContext.draw(image, in: boundingBox)
         }
         let time = startingPoint.timeIntervalSinceNow * -1;
-        print("Rendering time: \(String(format: "%.06f", time))");
+//        print("Rendering time: \(String(format: "%.06f", time))");
     }
 }
 
@@ -121,7 +121,8 @@ struct JuliaFractal: UIViewRepresentable {
     @Binding var updateTrigger: Bool;
     
     func makeUIView(context: Context) -> JuliaFractalView {
-        return JuliaFractalView(frame: CGRect(x: 100, y: 100, width: CGFloat(300), height: CGFloat(300)))
+        let screenSize: CGRect = UIScreen.main.bounds
+        return JuliaFractalView(frame: CGRect(x: 0, y: 0, width: screenSize.width, height: screenSize.height))
     }
 
     func updateUIView(_ uiView: JuliaFractalView, context: Context) {

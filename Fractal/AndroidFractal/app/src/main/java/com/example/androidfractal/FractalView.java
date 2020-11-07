@@ -20,8 +20,8 @@ public class FractalView extends View {
 
     private Paint paint;
     private long startTime;
-    private int imageWidth;
-    private int imageHeight;
+    private int imageWidth = 300;
+    private int imageHeight = 300;
     private int[] colors;
 
     public FractalView(Context context, @Nullable AttributeSet attrs) {
@@ -41,8 +41,6 @@ public class FractalView extends View {
         // To get size from the template
         // this.imageHeight = (int) getMeasuredHeight();
         // this.imageWidth = (int) getMeasuredWidth();
-        this.imageWidth = 300;
-        this.imageHeight = 300;
         Log.i("custom", "size: " + this.imageHeight + " x " + this.imageWidth);
         this.colors = new int[imageHeight * imageWidth];
     }
@@ -105,7 +103,7 @@ public class FractalView extends View {
         Bitmap bitmap = Bitmap.createBitmap(colors, imageWidth, imageHeight, Bitmap.Config.RGB_565);
         Rect dst = new Rect(0, 0, getMeasuredWidth(), getMeasuredHeight());
         canvas.drawBitmap(bitmap, null, dst, this.paint);
-        Log.i("custom", "fractal view draw time: " + (System.currentTimeMillis() - t0));
+//        Log.i("custom", "fractal view draw time: " + (System.currentTimeMillis() - t0));
 
         this.invalidate();
     }

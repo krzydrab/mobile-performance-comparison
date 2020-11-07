@@ -104,14 +104,21 @@ class ImagePainter extends CustomPainter {
 
 class FPSCalculator {
   static Stopwatch stopwatch = Stopwatch();
-  static int fps = 0; 
+  static int frames = 0;
+  static int fps = 0;
 
   static void update() {
     if (stopwatch.isRunning) {
-      int elapsedTime = (stopwatch..stop()).elapsedMilliseconds;
-      fps = 1000 ~/ elapsedTime;
+      int elapsedTime = stopwatch.elapsedMilliseconds;
+      if(elapsedTime > 1000) {
+        fps = frames;
+        frames = 0;
+        stopwatch..reset()..start();
+      }
+      frames += 1;
+    } else {
+      stopwatch..reset()..start();
     }
-    stopwatch..reset()..start();
   }
 }
 
@@ -168,7 +175,7 @@ Future<ui.Image> generateImage(Size size, double kOffset) async {
       }
   }
   stopwatch.stop();
-  print("Preparing image: ${stopwatch.elapsedMilliseconds}");
+  //print("Preparing image: ${stopwatch.elapsedMilliseconds}");
 
   ui.decodeImageFromPixels(
     pixels.buffer.asUint8List(),
