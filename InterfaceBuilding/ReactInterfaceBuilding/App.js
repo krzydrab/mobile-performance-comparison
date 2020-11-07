@@ -38,7 +38,7 @@ export default class App extends Component {
   renderItem = (i) => {
     return (
       <View key={i.id} style={{ height: 13 }}>
-        <Text>Example text #{i.value}</Text>
+        <Text>Row: #{i.value}</Text>
       </View>
     );
   }
@@ -48,8 +48,8 @@ export default class App extends Component {
     while(itemsToChange--) {
       a = Math.floor(Math.random() * this.items.length);
       this.items[a].value = Math.random(); // TODO: do not mutate
-      this.setState({items: this.items });
     }
+    this.setState({items: this.items });
   }
 
   randomVisiblityChange = () => {
@@ -57,8 +57,8 @@ export default class App extends Component {
     while(itemsToChange--) {
       a = Math.floor(Math.random() * this.items.length);
       this.items[a].visibility = !this.items[a].visibility; // TODO: do not mutate
-      this.setState({items: this.items });
     }
+    this.setState({items: this.items });
   }
 
   render() {
