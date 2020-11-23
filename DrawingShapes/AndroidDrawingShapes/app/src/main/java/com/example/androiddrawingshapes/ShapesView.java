@@ -17,7 +17,7 @@ public class ShapesView extends View {
     enum MODE { OVALS, RECTS };
 
     MODE mode = MODE.RECTS;
-    int numberOfShapes = 1000;
+    int numberOfShapes = 3000;
 
     int width = 0;
     int height = 0;

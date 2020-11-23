@@ -20,8 +20,8 @@ public class FractalView extends View {
 
     private Paint paint;
     private long startTime;
-    private int imageWidth = 300;
-    private int imageHeight = 300;
+    private int imageWidth = 700;
+    private int imageHeight = 700;
     private int[] colors;
 
     public FractalView(Context context, @Nullable AttributeSet attrs) {
@@ -90,6 +90,7 @@ public class FractalView extends View {
 
                     if(Z_re2 + Z_im2 > 4) {
                         colors[colorsOffset] = Math.min(50 + n * 9, 255) << 16;
+//                        colors[colorsOffset] = Color.rgb(Math.min(50 + n * 9, 255), 0, 0);
                         break;
                     }
 

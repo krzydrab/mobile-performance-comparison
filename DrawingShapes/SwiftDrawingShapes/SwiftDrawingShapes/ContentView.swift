@@ -15,7 +15,7 @@ struct ContentView: View {
     let rectSize: CGFloat
     let width: Int
     let height: Int
-    let numberOfShapes = 1000
+    let numberOfShapes = 100
     let mode = "ovals"
     
     init() {

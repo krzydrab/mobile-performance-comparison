@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
-import 'dart:async';
-import 'dart:typed_data';
+import 'dart:math';
 
 void main() => runApp(MyApp());
 
@@ -31,8 +30,8 @@ class Fractal extends StatefulWidget {
 }
 
 class _FractalState extends State<Fractal> with SingleTickerProviderStateMixin {
-  double _width = 300;
-  double _height = 300;
+  double _width = 400;
+  double _height = 400;
   double _kOffset = 10000;
   Animation<double> animation;
   AnimationController controller;
@@ -41,7 +40,7 @@ class _FractalState extends State<Fractal> with SingleTickerProviderStateMixin {
   void initState() {
     super.initState();
     controller = AnimationController(
-      duration: Duration(milliseconds: 20000), 
+      duration: Duration(milliseconds: 15000), 
       vsync: this,
     );
 
@@ -54,7 +53,7 @@ class _FractalState extends State<Fractal> with SingleTickerProviderStateMixin {
     //   }
     // });
 
-    animation = Tween(begin: 0.0, end: 0.2).animate(controller)
+    animation = Tween(begin: 0.0, end: 10.0).animate(controller)
       ..addListener(() {        
         setState(() {
           _kOffset = animation.value;
@@ -65,6 +64,11 @@ class _FractalState extends State<Fractal> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    FPSCalculator.update();
+
+    var screenWidth = MediaQuery.of(context).size.width;
+    var screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Julia fractal"),
@@ -92,6 +96,27 @@ class _FractalState extends State<Fractal> with SingleTickerProviderStateMixin {
   }
 }
 
+class FPSCalculator {
+  static Stopwatch stopwatch = Stopwatch();
+  static int frames = 0;
+  static int fps = 0;
+
+  static void update() {
+    if (stopwatch.isRunning) {
+      int elapsedTime = stopwatch.elapsedMilliseconds;
+      if(elapsedTime > 1000) {
+        fps = frames;
+        frames = 0;
+        stopwatch..reset()..start();
+        print("FPS: $fps");
+      }
+      frames += 1;
+    } else {
+      stopwatch..reset()..start();
+    }
+  }
+}
+
 class JuliaPainter extends CustomPainter {
   double kOffset = 0;
 
@@ -104,15 +129,15 @@ class JuliaPainter extends CustomPainter {
     final stopwatch = Stopwatch()..start();    
 
     double minRe = -2.0;
-    double maxRe= 1.0;
-    double minIm = -1.2;
-    double maxIm = 1.2;
+    double maxRe= 2.0;
+    double minIm = -1.5;
+    double maxIm = 1.5;
 
     double reFactor = (maxRe-minRe)/(size.width);
     double imFactor = (maxIm-minIm)/(size.height-1);
 
-    double kRe = 0.353 + kOffset;
-    double kIm = 0.288 + kOffset;
+    double kRe = 0.0 + sin(kOffset) * 0.4;
+    double kIm = -0.5 + cos(kOffset) * 0.4;
     int maxIterations = 30;
     var paint = Paint()
       ..color = Colors.black
@@ -158,7 +183,7 @@ class JuliaPainter extends CustomPainter {
         }
     }
     stopwatch.stop();
-    print("Rendering time: ${stopwatch.elapsedMilliseconds}");
+    // print("Rendering time: ${stopwatch.elapsedMilliseconds}");
   }
 
   @override

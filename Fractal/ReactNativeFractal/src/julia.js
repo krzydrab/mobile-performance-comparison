@@ -1,9 +1,9 @@
 export default `<html>
 <head></head>
 <body>
-  <div id="cavas-container" style="flex: 1; justify-content: 'center'; align-items: 'center'">
+  <div id="cavas-container">
     <div>
-      <canvas id="julia" width="300" height="300"></canvas>
+      <canvas id="julia" width="600" height="600"></canvas>
     </div>
   </div>
 

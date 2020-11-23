@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import { View, Dimensions } from 'react-native';
+import { View, Button, Text, Dimensions } from 'react-native';
 
 import {
   Svg,
@@ -20,7 +20,7 @@ import {
 
 export default class App extends React.Component {
   mode = "ovals";
-  numberOfShapes = 100;
+  numberOfShapes = 125;
 
   width = Dimensions.get('window').width * 0.8;
   height = Dimensions.get('window').height * 0.8;
@@ -30,8 +30,23 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { frames: 0, fps: 0 };
-    this.ids = Array.from({length: this.numberOfShapes}, (_, k) => k)
+    this.state = { 
+      frames: 0, 
+      fps: 0, 
+      numberOfShapes: this.numberOfShapes 
+    };
+    this.generateIds();
+  }
+
+  generateIds = () => {
+    this.ids = Array.from({length: this.state.numberOfShapes}, (_, k) => k)
+  }
+
+  increaseShapes = () => {
+    this.setState(
+      (state) => ({ numberOfShapes: state.numberOfShapes + 125 }), 
+      this.generateIds
+    );
   }
 
   componentDidMount() {
@@ -72,7 +87,7 @@ export default class App extends React.Component {
     });
 
     return <View>
-      <Svg height="100%" width="100%" viewBox={`0 0 ${this.width} ${this.height}`}>
+      <Svg height="90%" width="100%" viewBox={`0 0 ${this.width} ${this.height}`}>
         {rects}
       </Svg>
     </View>;
@@ -92,7 +107,7 @@ export default class App extends React.Component {
     });
 
     return <View>
-      <Svg height="100%" width="100%" viewBox={`0 0 ${this.width} ${this.height}`}>
+      <Svg height="90%" width="100%" viewBox={`0 0 ${this.width} ${this.height}`}>
         <Defs>
           <RadialGradient
             id="grad"
@@ -108,10 +123,10 @@ export default class App extends React.Component {
   }
 
   render() {
-    if (this.mode == "ovals") {
-      return this.renderOvals();
-    } else if(this.mode == "rects") {
-      return this.renderRects();
-    }
+    return <View>
+      { this.mode == "ovals" && this.renderOvals() }
+      { this.mode == "rects" && this.renderRects() }
+      <Button onPress={this.increaseShapes} title={"Shapes: " + this.state.numberOfShapes}/>
+    </View>
   }
 };

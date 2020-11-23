@@ -90,8 +90,8 @@ enum Mode {
 }
 
 class ShapesPainter extends CustomPainter {
-  Mode mode = Mode.ovals;
-  int numberOfShapes = 1000;
+  Mode mode = Mode.rects;
+  int numberOfShapes = 3000;
 
   bool updateTrigger;
   double ovalSize;

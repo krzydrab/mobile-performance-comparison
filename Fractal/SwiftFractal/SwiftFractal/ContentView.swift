@@ -21,12 +21,13 @@ struct ContentView: View {
                 self.fps = frames
                 self.frames = 0
                 self.lastUpdate = currentUpdate
+                print(fps);
             };
             self.frames += 1
         }
     }
     
-    private let updateTimer = Timer.publish(every: 0.015, on: .main, in: .common).autoconnect();
+    private let updateTimer = Timer.publish(every: 0.0167, on: .main, in: .common).autoconnect();
     private var fpsCalculator = FPSCalculator();
     @State private var updateTrigger = false;
     
@@ -35,7 +36,6 @@ struct ContentView: View {
         .onReceive(self.updateTimer) { _ in
             self.updateTrigger.toggle();
             self.fpsCalculator.update();
-            print(self.fpsCalculator.fps);
         }
     }
 }

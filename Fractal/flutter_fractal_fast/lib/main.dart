@@ -19,8 +19,8 @@ class Fractal extends StatefulWidget {
 }
 
 class _FractalState extends State<Fractal> with SingleTickerProviderStateMixin {
-  double _width = 300;
-  double _height = 300;
+  double _width = 700;
+  double _height = 700;
   double _kOffset = 10000;
   Animation<double> animation;
   AnimationController controller;
@@ -29,11 +29,11 @@ class _FractalState extends State<Fractal> with SingleTickerProviderStateMixin {
   void initState() {
     super.initState();
     controller = AnimationController(
-      duration: Duration(milliseconds: 60000), 
+      duration: Duration(milliseconds: 15000), 
       vsync: this,
     );
 
-    animation = Tween(begin: 0.0, end: 3.14).animate(controller)
+    animation = Tween(begin: 0.0, end: 10.0).animate(controller)
       ..addListener(() {        
         setState(() {
           _kOffset = animation.value;
@@ -46,6 +46,9 @@ class _FractalState extends State<Fractal> with SingleTickerProviderStateMixin {
   /// it using [CustomPaint] to render it.
   @override
   Widget build(BuildContext context) {
+    var screenWidth = MediaQuery.of(context).size.width;
+    var screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Julia fractal - fast version"),
@@ -62,10 +65,14 @@ class _FractalState extends State<Fractal> with SingleTickerProviderStateMixin {
                   if (snapshot.hasData) {
                     return CustomPaint(
                       // Passing our image
-                      painter: ImagePainter(image: snapshot.data),
+                      painter: ImagePainter(
+                        image: snapshot.data, 
+                        width: screenWidth, 
+                        height: screenHeight - 117,
+                      ),
                       child: Container(
-                        width: this._width,
-                        height: this._height,
+                        width: screenWidth,
+                        height: screenHeight - 117,
                       ),
                     );
                   }
@@ -84,16 +91,24 @@ class _FractalState extends State<Fractal> with SingleTickerProviderStateMixin {
 /// Paints given [ui.Image] on [ui.Canvas]
 class ImagePainter extends CustomPainter {
   ui.Image image;
+  double width;
+  double height;
 
-  ImagePainter({this.image});
+  ImagePainter({this.image, this.width, this.height});
 
   @override
   void paint(Canvas canvas, Size size) {
     // NOTE: this function runs almost in zero time because drawing
     // is done on separate thread
-    canvas.drawImage(image, Offset.zero, Paint());
+    // canvas.drawImage(image, Offset.zero, Paint());
+    canvas.drawImageRect(
+      image, 
+      Rect.fromLTRB(0, 0, image.width.toDouble(), image.height.toDouble()), 
+      Rect.fromLTRB(0, 0, width, height),
+      Paint()
+    );
     FPSCalculator.update();
-    print("FPS: ${FPSCalculator.fps}");
+    // print("FPS: ${FPSCalculator.fps}");
   }
 
   @override
@@ -114,6 +129,7 @@ class FPSCalculator {
         fps = frames;
         frames = 0;
         stopwatch..reset()..start();
+        print("FPS: $fps");
       }
       frames += 1;
     } else {
