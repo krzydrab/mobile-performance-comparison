@@ -4,7 +4,7 @@ import com.example.androidalgorithms.Utils;
 import com.example.androidalgorithms.algorithms.GaussElimination;
 
 public class GaussEliminationTester extends AlgorithmTester {
-    private int[] arraySizes = { 10, 50, 100, 200, 400, 700, 1000, 1500, 2000, 2500, 3000 };
+    private int[] arraySizes = { 50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 600 };
 
     @Override
     public String testDescription(int testSize) {

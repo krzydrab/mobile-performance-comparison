@@ -4,13 +4,13 @@ import 'package:flutter_algorithms/algorithms/ackermann_function.dart';
 class AckermannFunctionTester extends AlgorithmTester {
   @override
   String testDescription(int testSize) {
-      return "m = 3, n = ${3 + testSize}";
+      return "m = 3, n = ${2 + testSize}";
   }
 
   @override
   int test(int testSize) {
       int m = 3;
-      int n = 3 + testSize;
+      int n = 2 + testSize;
 
       final stopwatch = Stopwatch()..start();
       AckermannFunction.call(m, n);

@@ -38,7 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void _startBtnClicked() {
     print("startClicked");
     AlgorithmTester tester = buildTester();
-    List<Result> results = tester.testAll(0, 8);
+    List<Result> results = tester.testAll(0, 9);
     setState(() {
       _result = results.map((r) => "${r.description} : ${r.time / 1000.0} s").join("\n");
     });

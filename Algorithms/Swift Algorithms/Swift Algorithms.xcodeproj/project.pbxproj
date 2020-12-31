@@ -435,6 +435,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.example.Swift-Algorithms";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_DISABLE_SAFETY_CHECKS = YES;
+				SWIFT_ENFORCE_EXCLUSIVE_ACCESS = off;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -448,6 +450,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Swift Algorithms/Preview Content\"";
 				DEVELOPMENT_TEAM = 8PN4R734GL;
 				ENABLE_PREVIEWS = YES;
+				GCC_OPTIMIZATION_LEVEL = s;
 				INFOPLIST_FILE = "Swift Algorithms/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -455,6 +458,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.example.Swift-Algorithms";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_DISABLE_SAFETY_CHECKS = YES;
+				SWIFT_ENFORCE_EXCLUSIVE_ACCESS = off;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

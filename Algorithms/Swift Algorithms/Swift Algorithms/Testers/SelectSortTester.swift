@@ -9,7 +9,7 @@
 import Foundation
 
 class SelectSortTester:  AlgorithmTester {
-    let arraySizes: [Int] = [10, 50, 100, 500, 1000, 5000, 10000, 20000, 30000, 40000]
+    let arraySizes: [Int] = [100, 500, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000]
 
     override func testDescription(testSize: Int) -> String {
         return "N = \(arraySizes[testSize])";
@@ -19,7 +19,9 @@ class SelectSortTester:  AlgorithmTester {
         var arrayToTest: [Double] = generateRandomList(size: arraySizes[testSize]);
 
         let startingPoint = Date()
-        selectSort(list: &arrayToTest);
-        return startingPoint.timeIntervalSinceNow * -1;
+        let arr = selectSort(list: &arrayToTest);
+        let time = startingPoint.timeIntervalSinceNow * -1
+        print(arr[0]);
+        return time;
     }
 }

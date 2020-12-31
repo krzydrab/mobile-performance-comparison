@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'dart:math';
-
-import 'dart:ui';
+import 'row_data.dart';
+import 'tester.dart';
+import 'visibility_change_tester.dart';
+import 'swap_tester.dart';
+import 'full_rebuild_tester.dart';
+import 'no_change_tester.dart';
 
 void main() {
   runApp(MyApp());
@@ -24,81 +27,70 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class RowData {
-  int id;
-  double value;
-  bool visibility = true;
-
-  RowData() {
-    var rng = new Random();
-    this.id = rng.nextInt(10000);
-    this.value = rng.nextDouble();
-  }
-}
-
-class FPSCalculator {
-  static Stopwatch stopwatch = Stopwatch();
-  static int frames = 0;
-  static int fps = 0;
-
-  static void update() {
-    if (stopwatch.isRunning) {
-      int elapsedTime = stopwatch.elapsedMilliseconds;
-      if(elapsedTime > 1000) {
-        fps = frames;
-        frames = 0;
-        stopwatch..reset()..start();
-      }
-      frames += 1;
-    } else {
-      stopwatch..reset()..start();
-    }
-  }
-}
+enum TestType { Visibility, Swap, FullRebuild, NoChange }
 
 class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMixin  {
-  List<RowData> _rows = new List(100).map((e) => RowData()).toList();
+  // ====== Test parameters ======
+  TestType _testType = TestType.FullRebuild;
+  int singleTestDuration = 10; // in sec
+  // =============================
+
+  int frames = 0;
+  bool _showResults = false;
+  List<RowData> _rows = [];
+  Tester _tester;
+  void Function() noOpFn = () {};
 
   Animation<double> animation;
   AnimationController controller;
 
-  void _randomVisiblityChange() {
-    var rng = new Random();
-    int itemsToChange = 2;
-
-    while(itemsToChange > 0) {
-      int pos = rng.nextInt(this._rows.length);
-      this._rows[pos].visibility = !this._rows[pos].visibility;
-      itemsToChange -= 1;
+  void setupTester() {
+    switch(_testType) {
+      case TestType.Visibility:
+        this._tester = VisibilityChangeTester();
+        break;
+      case TestType.Swap:
+        this._tester = SwapTester();
+        break;
+      case TestType.FullRebuild:
+        this._tester = FullRebuildTester();
+        break;
+      case TestType.NoChange:
+        this._tester = NoChangeTester();
     }
   }
-
-  // void randomElementsSwap() {
-  //       var itemsToChange = 10;
-  //       while(itemsToChange > 0) {
-  //           let i = Int.random(in: 0..<self.rows.count);
-  //           let j = Int.random(in: 0..<self.rows.count);
-  //           rows.swapAt(i, j);
-  //           itemsToChange -= 1;
-  //       }
-  //   }
 
   @override
   void initState() {
     super.initState();
+    this.setupTester();
     controller = AnimationController(
-      duration: Duration(milliseconds: 60000),
+      duration: Duration(milliseconds: this.singleTestDuration * 1000),
       vsync: this,
     );
 
     animation = Tween(begin: 0.0, end: 100.0).animate(controller)
       ..addListener(() {
         setState(() {
-          this._randomVisiblityChange();
+          this._rows = this._tester.updateRows();
         });
-        FPSCalculator.update();
-        print(FPSCalculator.fps);
+        this.frames += 1;
+      })
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          if (this._tester.isCompleted()) {
+            this._tester.testEnded(this.frames / this.singleTestDuration);
+            this._showResults = true;
+          } else {
+            this._tester.testEnded(this.frames / this.singleTestDuration);
+            this.frames = 0;
+            this._rows = this._tester.nextTest();
+            controller.reset();
+            controller.forward();
+          }
+        }
       });
+    this._tester.nextTest();
     controller.forward();
   }
 
@@ -109,7 +101,10 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: 
-            _rows.where((e) => e.visibility).map((e) => Text("Row: ${e.value}")).toList(),
+            _showResults
+              ? _tester.results.map((r) => Text("N: ${r.n}, FPS: ${r.fps}, TTM: ${r.timeToModify}")).toList()
+              // : _rows.map((e) => Text("Row: ${e.value}")).toList(),
+              : _rows.map((e) => FlatButton(child: Text("Row: ${e.value}"), onPressed: this.noOpFn)).toList(),
         ),
       ),
     );

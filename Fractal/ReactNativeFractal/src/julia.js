@@ -1,9 +1,12 @@
 export default `<html>
-<head></head>
+<head>
+<style>
+</style>
+</head>
 <body>
   <div id="cavas-container">
     <div>
-      <canvas id="julia" width="600" height="600"></canvas>
+      <canvas id="julia" width="650" height="650"></canvas>
     </div>
   </div>
 
@@ -14,6 +17,7 @@ export default `<html>
 
       // Counting FPS
       let frames = 0;
+      let calculatingTime = 0;
       const increaseFrames = () => {
         frames += 1;
         const kOffset = (Date.now() - startTime) * 0.0005;
@@ -23,11 +27,13 @@ export default `<html>
       increaseFrames();
   
       setInterval(() => {
-        window.ReactNativeWebView.postMessage(frames);
-        frames = 0;
-      }, 1000);
+        window.ReactNativeWebView.postMessage(
+          JSON.stringify({ frames, calculatingTime })
+        );
+      }, 100);
 
       function drawJulia(canvas, kOffset) {
+        const startTime = Date.now();
         const ctx = canvas.getContext('2d');
         var imageData = ctx.createImageData(canvas.width, canvas.height);
         var data = imageData.data;
@@ -84,7 +90,7 @@ export default `<html>
             dataOffset += 4;
           }
         }
-
+        calculatingTime += Date.now() - startTime;
         ctx.putImageData(imageData, 0, 0);
       } // drawJulia
       

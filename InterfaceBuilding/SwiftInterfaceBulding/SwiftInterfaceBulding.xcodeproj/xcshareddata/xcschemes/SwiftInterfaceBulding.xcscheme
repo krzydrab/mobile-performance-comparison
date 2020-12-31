@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D6C9582024D357FE0009B18B"
-               BuildableName = "SwiftFractal.app"
-               BlueprintName = "SwiftFractal"
-               ReferencedContainer = "container:SwiftFractal.xcodeproj">
+               BlueprintIdentifier = "D69244D6253B78C1005F7029"
+               BuildableName = "SwiftInterfaceBulding.app"
+               BlueprintName = "SwiftInterfaceBulding"
+               ReferencedContainer = "container:SwiftInterfaceBulding.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,18 +32,18 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D6C9583624D358020009B18B"
-               BuildableName = "SwiftFractalTests.xctest"
-               BlueprintName = "SwiftFractalTests"
-               ReferencedContainer = "container:SwiftFractal.xcodeproj">
+               BlueprintIdentifier = "D69244EC253B78C3005F7029"
+               BuildableName = "SwiftInterfaceBuldingTests.xctest"
+               BlueprintName = "SwiftInterfaceBuldingTests"
+               ReferencedContainer = "container:SwiftInterfaceBulding.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Release"
-      selectedDebuggerIdentifier = ""
-      selectedLauncherIdentifier = "Xcode.IDEFoundation.Launcher.PosixSpawn"
+      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
+      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
       ignoresPersistentStateOnLaunch = "NO"
@@ -54,10 +54,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D6C9582024D357FE0009B18B"
-            BuildableName = "SwiftFractal.app"
-            BlueprintName = "SwiftFractal"
-            ReferencedContainer = "container:SwiftFractal.xcodeproj">
+            BlueprintIdentifier = "D69244D6253B78C1005F7029"
+            BuildableName = "SwiftInterfaceBulding.app"
+            BlueprintName = "SwiftInterfaceBulding"
+            ReferencedContainer = "container:SwiftInterfaceBulding.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -71,10 +71,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D6C9582024D357FE0009B18B"
-            BuildableName = "SwiftFractal.app"
-            BlueprintName = "SwiftFractal"
-            ReferencedContainer = "container:SwiftFractal.xcodeproj">
+            BlueprintIdentifier = "D69244D6253B78C1005F7029"
+            BuildableName = "SwiftInterfaceBulding.app"
+            BlueprintName = "SwiftInterfaceBulding"
+            ReferencedContainer = "container:SwiftInterfaceBulding.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

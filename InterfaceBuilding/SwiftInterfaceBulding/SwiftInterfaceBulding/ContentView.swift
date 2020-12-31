@@ -8,89 +8,77 @@
 
 import SwiftUI
 
-func generateRandomList(size: Int) -> [Double] {
-    var res = Array<Double>(repeating: 0.0, count: size)
-    for i in 0..<size {
-        res[i] = Double.random(in: 0...1)
-    }
-    return res;
+enum TestType {
+    case Visibility, Swap, FullRebuild, NoChange
 }
-//    let randomName = names.randomElement()
+
 struct ContentView: View {
-    // https://medium.com/swlh/swiftui-performance-battle-anyview-vs-group-55bf852158df
-    private class FPSCalculator {
-        private var lastUpdate: TimeInterval = 0;
-        private var frames = 0;
-        private(set) var fps: Int = 0;
-
-        func update() {
-            let currentUpdate = Date().timeIntervalSinceReferenceDate;
-            if (currentUpdate - lastUpdate >= 1.0) {
-                self.fps = frames;
-                self.frames = 0;
-                self.lastUpdate = currentUpdate
+    
+    // ====== Test parameters ======
+    private let testType: TestType = TestType.FullRebuild;
+    private static let singleTestDuration = TimeInterval(10); // in sec
+    // =============================
+    
+    private var tester: Tester
+    private var noOpFn = {}
+    @State private var updateTimer = Timer.publish(every: 0.016, on: .main, in: .common).autoconnect();
+    @State private var testTimer = Timer.publish(every: ContentView.singleTestDuration, on: .main, in: .common).autoconnect();
+    @State var showResults = false
+    @State var frames = 0
+    @State var rows: [RowData] = [];
+    
+    init() {
+        switch(self.testType) {
+        case .Visibility:
+            self.tester = VisibilityChangeTester()
+        case .Swap:
+            self.tester = SwapTester()
+        case .FullRebuild:
+            self.tester = FullRebuildTester()
+        case .NoChange:
+            self.tester = NoChangeTester()
+        }
+        self.rows = self.tester.nextTest()
+    }
+    
+    var testView: some View {
+        ForEach(rows, id: \.id) { data in
+            Button(action: self.noOpFn) {
+                Text("Row: \(data.value)")
             }
-            self.frames += 1;
-        }
-    }
-    
-    struct RowData: Identifiable {
-        var id = UUID()
-        var value: Double
-        var visibility = true
-    }
-    
-    struct RowView: View {
-        public var data: RowData
-
-        var body: some View {
-            Text("Row: \(data.value)")
-                .font(.system(size: 10))
-        }
-    }
-    
-    // Understand better changing the model
-    // I think we should measure CPU and check CPU according to number of elements rendered
-    
-    func randomVisiblityChange() {
-      var itemsToChange = 2;
-      while(itemsToChange > 0) {
-        let pos = Int.random(in: 0..<self.rows.count);
-        self.rows[pos] = RowData(id: self.rows[pos].id, value: Double.random(in: 0...1), visibility: !self.rows[pos].visibility);
-        itemsToChange -= 1;
-      }
-    }
-    
-    func randomElementsSwap() {
-        var itemsToChange = 10;
-        while(itemsToChange > 0) {
-            let i = Int.random(in: 0..<self.rows.count);
-            let j = Int.random(in: 0..<self.rows.count);
-            rows.swapAt(i, j);
-            itemsToChange -= 1;
-        }
-    }
-    
-    private let updateTimer = Timer.publish(every: 0.010, on: .main, in: .common).autoconnect();
-    private var fpsCalculator = FPSCalculator();
-    @State private var updateTrigger = false;
-    @State var rows = generateRandomList(size: 100).map {
-        RowData(value: $0)
-    };
-    
-    var body: some View {
-//        List(rows) { row in
-//            RowView(data: row)
-//        }.environment(\.defaultMinListRowHeight, 7)
-        ForEach(rows.filter(\.visibility), id: \.id) { data in
-            RowView(data: data)
+//            Text("Row: \(data.value)")
+//                .font(.system(size: 10))
         }
         .onReceive(self.updateTimer) { _ in
-//            self.updateTrigger.toggle();
-            self.fpsCalculator.update();
-//            self.randomVisiblityChange();
-            self.randomElementsSwap();
-            print(self.fpsCalculator.fps);
+            self.frames += 1
+            self.rows = self.tester.updateRows()
+        }.onReceive(self.testTimer) { _ in
+            self.updateTimer.upstream.connect().cancel()
+            self.testTimer.upstream.connect().cancel()
+            self.tester.testEnded(fps: Double(self.frames) / ContentView.singleTestDuration)
+            self.frames = 0
+            if (self.tester.isCompleted()) {
+                self.showResults = true
+            } else {
+                self.rows = self.tester.nextTest()
+                self.updateTimer = Timer.publish(every: 0.016, on: .main, in: .common).autoconnect();
+                self.testTimer = Timer.publish(every: ContentView.singleTestDuration, on: .main, in: .common).autoconnect();
+            }
+        }
+    }
+    
+    var resultView: some View {
+        ForEach(tester.results, id: \.n) { res in
+            Text("N: \(res.n), FPS: \(res.fps), TTM: \(res.timeToModify)")
+        }
+    }
+    
+    @ViewBuilder
+    var body: some View {
+        if(self.showResults) {
+            resultView
+        } else {
+            testView
         }
     }
 }

@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D647DD2B259BA91700A40A24 /* Tester.swift in Sources */ = {isa = PBXBuildFile; fileRef = D647DD2A259BA91700A40A24 /* Tester.swift */; };
+		D647DD2F259BA97700A40A24 /* VisibilityChangeTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = D647DD2E259BA97700A40A24 /* VisibilityChangeTester.swift */; };
+		D647DD31259BAACE00A40A24 /* FullRebuildTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = D647DD30259BAACE00A40A24 /* FullRebuildTester.swift */; };
+		D647DD33259BAB7700A40A24 /* SwapTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = D647DD32259BAB7700A40A24 /* SwapTester.swift */; };
+		D68DC465259CD5DA008A8F5C /* NoChangeTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68DC464259CD5DA008A8F5C /* NoChangeTester.swift */; };
 		D69244DB253B78C1005F7029 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69244DA253B78C1005F7029 /* AppDelegate.swift */; };
 		D69244DD253B78C1005F7029 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69244DC253B78C1005F7029 /* SceneDelegate.swift */; };
 		D69244DF253B78C1005F7029 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69244DE253B78C1005F7029 /* ContentView.swift */; };
@@ -27,6 +32,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D647DD2A259BA91700A40A24 /* Tester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tester.swift; sourceTree = "<group>"; };
+		D647DD2E259BA97700A40A24 /* VisibilityChangeTester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisibilityChangeTester.swift; sourceTree = "<group>"; };
+		D647DD30259BAACE00A40A24 /* FullRebuildTester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullRebuildTester.swift; sourceTree = "<group>"; };
+		D647DD32259BAB7700A40A24 /* SwapTester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwapTester.swift; sourceTree = "<group>"; };
+		D68DC464259CD5DA008A8F5C /* NoChangeTester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoChangeTester.swift; sourceTree = "<group>"; };
 		D69244D7253B78C1005F7029 /* SwiftInterfaceBulding.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftInterfaceBulding.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D69244DA253B78C1005F7029 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D69244DC253B78C1005F7029 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -79,6 +89,7 @@
 		D69244D9253B78C1005F7029 /* SwiftInterfaceBulding */ = {
 			isa = PBXGroup;
 			children = (
+				D68DC464259CD5DA008A8F5C /* NoChangeTester.swift */,
 				D69244DA253B78C1005F7029 /* AppDelegate.swift */,
 				D69244DC253B78C1005F7029 /* SceneDelegate.swift */,
 				D69244DE253B78C1005F7029 /* ContentView.swift */,
@@ -86,6 +97,10 @@
 				D69244E5253B78C3005F7029 /* LaunchScreen.storyboard */,
 				D69244E8253B78C3005F7029 /* Info.plist */,
 				D69244E2253B78C3005F7029 /* Preview Content */,
+				D647DD2A259BA91700A40A24 /* Tester.swift */,
+				D647DD2E259BA97700A40A24 /* VisibilityChangeTester.swift */,
+				D647DD30259BAACE00A40A24 /* FullRebuildTester.swift */,
+				D647DD32259BAB7700A40A24 /* SwapTester.swift */,
 			);
 			path = SwiftInterfaceBulding;
 			sourceTree = "<group>";
@@ -208,9 +223,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D647DD2F259BA97700A40A24 /* VisibilityChangeTester.swift in Sources */,
+				D68DC465259CD5DA008A8F5C /* NoChangeTester.swift in Sources */,
 				D69244DB253B78C1005F7029 /* AppDelegate.swift in Sources */,
+				D647DD33259BAB7700A40A24 /* SwapTester.swift in Sources */,
 				D69244DD253B78C1005F7029 /* SceneDelegate.swift in Sources */,
+				D647DD2B259BA91700A40A24 /* Tester.swift in Sources */,
 				D69244DF253B78C1005F7029 /* ContentView.swift in Sources */,
+				D647DD31259BAACE00A40A24 /* FullRebuildTester.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

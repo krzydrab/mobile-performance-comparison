@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     public void onStartBtnClicked(View view) {
         AlgorithmTester tester = buildTester();
-        AlgorithmTester.Result[] results = tester.testAll(0, 10);
+        AlgorithmTester.Result[] results = tester.testAll(0, 9);
         String strResult = "";
         for(int i = 0 ; i < results.length; i++) {
             double timeInSec = results[i].time / 1000000000.0;

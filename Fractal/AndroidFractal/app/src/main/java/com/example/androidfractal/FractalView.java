@@ -20,8 +20,8 @@ public class FractalView extends View {
 
     private Paint paint;
     private long startTime;
-    private int imageWidth = 700;
-    private int imageHeight = 700;
+    private int imageWidth = 200;
+    private int imageHeight = 200;
     private int[] colors;
 
     public FractalView(Context context, @Nullable AttributeSet attrs) {
@@ -101,10 +101,11 @@ public class FractalView extends View {
                 colorsOffset += 1;
             }
         }
+//        Log.i("custom", "fractal view draw time: " + (System.currentTimeMillis() - t0));
+        FpsCounter.calculatingTime += System.currentTimeMillis() - t0;
         Bitmap bitmap = Bitmap.createBitmap(colors, imageWidth, imageHeight, Bitmap.Config.RGB_565);
         Rect dst = new Rect(0, 0, getMeasuredWidth(), getMeasuredHeight());
         canvas.drawBitmap(bitmap, null, dst, this.paint);
-//        Log.i("custom", "fractal view draw time: " + (System.currentTimeMillis() - t0));
 
         this.invalidate();
     }

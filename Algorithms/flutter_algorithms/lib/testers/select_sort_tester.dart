@@ -3,7 +3,7 @@ import 'package:flutter_algorithms/testers/algorithm_tester.dart';
 import 'package:flutter_algorithms/algorithms/select_sort.dart';
 
 class SelectSortTester extends AlgorithmTester {
-  final List<int> arraySizes = [10, 50, 100, 500, 1000, 5000, 10000, 20000, 30000, 40000];
+  final List<int> arraySizes = [100, 500, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 20000];
 
   @override
   String testDescription(int testSize) {

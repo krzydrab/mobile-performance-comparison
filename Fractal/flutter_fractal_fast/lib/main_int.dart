@@ -1,3 +1,4 @@
+// int version
 import 'dart:async';
 import 'dart:typed_data';
 import 'dart:math';
@@ -19,11 +20,8 @@ class Fractal extends StatefulWidget {
 }
 
 class _FractalState extends State<Fractal> with SingleTickerProviderStateMixin {
-  // ====== Test parameters ======
   double _width = 300;
   double _height = 300;
-  int singleTestDuration = 20; // in sec
-  // =============================
   double _kOffset = 10000;
   Animation<double> animation;
   AnimationController controller;
@@ -32,7 +30,7 @@ class _FractalState extends State<Fractal> with SingleTickerProviderStateMixin {
   void initState() {
     super.initState();
     controller = AnimationController(
-      duration: Duration(milliseconds: singleTestDuration * 1000), 
+      duration: Duration(milliseconds: 15000), 
       vsync: this,
     );
 
@@ -40,14 +38,7 @@ class _FractalState extends State<Fractal> with SingleTickerProviderStateMixin {
       ..addListener(() {        
         setState(() {
           _kOffset = animation.value;
-          Statistics.update();
         });
-      })
-      ..addStatusListener((status) {
-        if (status == AnimationStatus.completed) {
-          print("Average fps: ${Statistics.totalFrames.toDouble() / singleTestDuration}");
-          print("Average calculating time: ${Statistics.totalCalculatingTime / Statistics.totalFrames}");
-        }
       });
     controller.forward();
   }
@@ -117,6 +108,8 @@ class ImagePainter extends CustomPainter {
       Rect.fromLTRB(0, 0, width, height),
       Paint()
     );
+    FPSCalculator.update();
+    // print("FPS: ${FPSCalculator.fps}");
   }
 
   @override
@@ -125,23 +118,19 @@ class ImagePainter extends CustomPainter {
   }
 }
 
-class Statistics {
+class FPSCalculator {
   static Stopwatch stopwatch = Stopwatch();
   static int frames = 0;
-  static int totalFrames = 0;
-  static int calculatingTime = 0;
-  static int totalCalculatingTime = 0;
+  static int fps = 0;
 
   static void update() {
     if (stopwatch.isRunning) {
       int elapsedTime = stopwatch.elapsedMilliseconds;
       if(elapsedTime > 1000) {
-        totalFrames += frames;
-        totalCalculatingTime += calculatingTime;
-        print("FPS: $frames, Calculating time: $calculatingTime");
+        fps = frames;
         frames = 0;
-        calculatingTime = 0;
         stopwatch..reset()..start();
+        print("FPS: $fps");
       }
       frames += 1;
     } else {
@@ -159,29 +148,29 @@ Future<ui.Image> generateImage(Size size, double kOffset) async {
 
   Int32List pixels = Int32List(width * height);
 
-  double minRe = -2.0;
-  double maxRe= 2.0;
-  double minIm = -1.5;
-  double maxIm = 1.5;
+  int minRe = -2000;
+  int maxRe= 2000;
+  int minIm = -1500;
+  int maxIm = 1500;
 
-  double reFactor = (maxRe-minRe)/(size.width);
-  double imFactor = (maxIm-minIm)/(size.height-1);
+  int reFactor = ((maxRe-minRe)~/(size.width));
+  int imFactor = (maxIm-minIm)~/(size.height-1);
 
-  double kRe = 0.0 + sin(kOffset) * 0.4;
-  double kIm = -0.5 + cos(kOffset) * 0.4;
+  int kRe = sin(kOffset) * 400 ~/ 1;
+  int kIm = -500 + cos(kOffset) * 400 ~/ 1;
   int maxIterations = 30;
   int index = 0;
   int blackColor = Color.fromRGBO(0, 0, 0, 1.0).value;
 
   for(int y = 0; y < size.height; ++y) {
       // Map image coordinates to c on complex plane
-      double cIm = maxIm - y*imFactor;
-      double cRe = minRe;
+      int cIm = maxIm - y*imFactor;
+      int cRe = minRe;
 
       for(int x = 0; x < size.width; ++x, cRe += reFactor, ++index) {
           // Z[0] = c
-          var ZRe = cRe;
-          var ZIm = cIm;
+          int ZRe = cRe;
+          int ZIm = cIm;
           pixels[index] = blackColor;
 
           for(int n = 0; n < maxIterations; ++n) {
@@ -189,19 +178,22 @@ Future<ui.Image> generateImage(Size size, double kOffset) async {
               // Z[n]^2 = (Z_re + Z_im*i)^2
               //        = Z_re^2 + 2*Z_re*Z_im*i + (Z_im*i)^2
               //        = Z_re^2 Z_im^2 + 2*Z_re*Z_im*i
-              var ZRe2 = ZRe * ZRe;
-              var ZIm2 = ZIm * ZIm;
+              int ZRe2 = ZRe * ZRe;
+              int ZIm2 = ZIm * ZIm;
 
-              if(ZRe2 + ZIm2 > 4) {                 
+              if(ZRe2 + ZIm2 > 4000000) {                 
                   pixels[index] = blackColor | min(60 + n * 10, 255) << 16;
                   break;
               }
 
-              ZIm = 2*ZRe*ZIm + kIm;
-              ZRe = ZRe2 - ZIm2 + kRe;
+              ZIm = 2*(ZRe*ZIm >> 10) + kIm;
+              ZRe = ((ZRe2 - ZIm2) >> 10) + kRe;
           }
       }
   }
+  stopwatch.stop();
+  //print("Preparing image: ${stopwatch.elapsedMilliseconds}");
+
   ui.decodeImageFromPixels(
     pixels.buffer.asUint8List(),
     width,
@@ -211,9 +203,6 @@ Future<ui.Image> generateImage(Size size, double kOffset) async {
       completer.complete(img);
     },
   );
-
-  stopwatch.stop();
-  Statistics.calculatingTime += stopwatch.elapsedMilliseconds;
 
   return completer.future;
 }

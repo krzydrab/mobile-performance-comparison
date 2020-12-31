@@ -1,7 +1,7 @@
 import { generateRandomList, generateRandomMatrix } from '../utils/array';
 import gaussElimination from '../algorithms/gaussElimination';
 
-const arraySizes = [10, 50, 100, 200, 400, 700, 1000, 1500, 2000, 2500, 3000];
+const arraySizes = [50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 600];
 
 const GaussEliminationTesterData = {
   'getDescription': function(testSize) {

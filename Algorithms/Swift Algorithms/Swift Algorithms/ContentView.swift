@@ -28,7 +28,7 @@ struct ContentView: View {
            }
            Text("\(self.results)")
            Button(action: {
-            let results = self.algorithmsTesters[self.selectedAlgorithm].testAll(fromTestSize: 0, toTestSize: 5)
+            let results = self.algorithmsTesters[self.selectedAlgorithm].testAll(fromTestSize: 0, toTestSize: 9)
             self.results = results.map { "\($0.description) : \(String(format: "%.06f", $0.time))s" }.joined(separator: "\n")
            }) {
                Text("Start")

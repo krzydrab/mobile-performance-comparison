@@ -9,7 +9,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
-    int NUMBER_OF_ROWS = 50;
+    public enum TestType { Visibility, Swap, FullRebuild }
+
+    // ====== Test parameters ======
+    int NUMBER_OF_ROWS = 150;
+    int NUMBER_OF_CHANGES = 80;
+    TestType testType = TestType.Visibility;
+    // =============================
 
     class RowData {
         int id;
@@ -25,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private RowData[] rows;
+    private int firstInvisibleItemId;
+
     private RowData[] generateRows() {
         RowData[] rows = new RowData[NUMBER_OF_ROWS];
         for(int i = 0 ; i < rows.length ; i++) {
@@ -34,28 +43,33 @@ public class MainActivity extends AppCompatActivity {
         return rows;
     };
 
-    private RowData[] rows;
-
-    private void randomVisiblityChange() {
-        int itemsToChange = 2;
-
-        while(itemsToChange > 0) {
-            int pos = (int)(Math.random() * this.rows.length);
-            this.rows[pos].visibility = !this.rows[pos].visibility;
-            itemsToChange -= 1;
+    void randomVisiblityChange() {
+        for(int i = 0 ; i < this.NUMBER_OF_CHANGES; i++) {
+            int pos = (firstInvisibleItemId + i) % this.rows.length;
+            this.rows[pos].visibility = true;
+        }
+        firstInvisibleItemId += this.NUMBER_OF_CHANGES;
+        firstInvisibleItemId %= this.rows.length;
+        for(int i = 0 ; i < this.NUMBER_OF_CHANGES; i++) {
+            int pos = (firstInvisibleItemId + i) % this.rows.length;
+            this.rows[pos].visibility = false;
         }
     }
 
      void randomElementsSwap() {
-           int itemsToChange = 2;
-           while(itemsToChange > 0) {
-               int i = (int)(Math.random() * this.rows.length);
-               int j = (int)(Math.random() * this.rows.length);
-               RowData temp = rows[i];
-               rows[i] = rows[j];
-               rows[j] = temp;
-               itemsToChange -= 1;
-           }
+        int itemsToChange = this.NUMBER_OF_CHANGES;
+        while(itemsToChange > 0) {
+           int i = (int)(Math.random() * this.rows.length);
+           int j = (int)(Math.random() * this.rows.length);
+           RowData temp = rows[i];
+           rows[i] = rows[j];
+           rows[j] = temp;
+           itemsToChange -= 1;
+       }
+    }
+
+    void fullRebuild() {
+        rows = generateRows();
     }
 
     void rebuildUi() {
@@ -82,7 +96,17 @@ public class MainActivity extends AppCompatActivity {
         this.frameCallback = new Choreographer.FrameCallback() {
             @Override
             public void doFrame(long _t) {
-                that.randomVisiblityChange();
+                switch(testType) {
+                    case Visibility:
+                        that.randomVisiblityChange();
+                        break;
+                    case Swap:
+                        that.randomElementsSwap();
+                        break;
+                    case FullRebuild:
+                        that.fullRebuild();
+                        break;
+                }
                 that.rebuildUi();
                 Choreographer.getInstance().postFrameCallback(that.frameCallback);
             }
