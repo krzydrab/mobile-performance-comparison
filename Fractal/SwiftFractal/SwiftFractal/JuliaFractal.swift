@@ -37,8 +37,10 @@ class JuliaFractalView: UIView {
     }
 
     override func draw(_ rect: CGRect) {
+        //=== TEST PARAMETERS ===
         let width  = 1200
         let height = 1200
+        //=======================
         let boundingBox = CGRect(x: 0, y: 0, width: CGFloat(400), height: CGFloat(600))
         let context = createBitmapContext(pixelsWide: width, height)
 

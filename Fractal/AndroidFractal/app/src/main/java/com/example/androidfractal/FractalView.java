@@ -20,8 +20,10 @@ public class FractalView extends View {
 
     private Paint paint;
     private long startTime;
+    //=== TEST PARAMETERS ===
     private int imageWidth = 200;
     private int imageHeight = 200;
+    //=======================
     private int[] colors;
 
     public FractalView(Context context, @Nullable AttributeSet attrs) {

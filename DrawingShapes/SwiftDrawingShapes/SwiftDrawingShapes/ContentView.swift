@@ -15,8 +15,10 @@ struct ContentView: View {
     let rectSize: CGFloat
     let width: Int
     let height: Int
+    //=== TEST PARAMETERS ===
     let numberOfShapes = 100
     let mode = "ovals"
+    //=======================
     
     init() {
         ovalSize = screenSize.width * 0.1

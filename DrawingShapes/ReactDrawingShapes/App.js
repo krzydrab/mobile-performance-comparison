@@ -19,8 +19,10 @@ import {
 } from 'react-native-svg';
 
 export default class App extends React.Component {
+  //=== TEST PARAMETERS ===
   mode = "ovals";
   numberOfShapes = 125;
+  //=======================
 
   width = Dimensions.get('window').width * 0.8;
   height = Dimensions.get('window').height * 0.8;

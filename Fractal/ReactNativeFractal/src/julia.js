@@ -6,7 +6,9 @@ export default `<html>
 <body>
   <div id="cavas-container">
     <div>
+      <!-- Test parameters. Change width and height of the fractal -->
       <canvas id="julia" width="650" height="650"></canvas>
+      <!-- End of test parameters -->
     </div>
   </div>
 

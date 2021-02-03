@@ -54,9 +54,21 @@ Po zbudowaniu i uruchomieniu aplikacji test zostanie automatycznie przeprowadzon
 
 ### Test rysowania fraktala
 
-Przed zbudowaniem aplikacji, w głównym pliku danego projektu można dostować parametry testu tj. wymiary renderowanego fraktala. By tego dokonać, należy zmienić wartość zmiennych `width` oraz `height`.
+Przed zbudowaniem aplikacji, w pliku: 
+* ReactNative - `Fractal/ReactNativeFractal/src/julia.js`
+* Flutter - `Fractal/flutter_fractal_fast/lib/main.dart`
+* AndroidSDK - `Fractal/AndroidFractal/app/src/main/java/com/example/androidfractal/FractalView.java`
+* SwiftUI - `Fractal/SwiftFractal/SwiftFractal/JuliaFractal.swift`
+ 
+można dostować parametry testu tj. wymiary renderowanego fraktala. By tego dokonać, należy zmienić wartość zmiennych `width` oraz `height`.
 Po uruchomieniu odczyt klatek na sekundę pojawi się w konsoli.
 
 ### Test rysowania prymitywów
 
-Przed zbudowaniem aplikacji, w głównym pliku danego projektu można dostować parametry. Zmienna `mode` określa typ testu. Przyjmuje dwie wartości: `ovals` albo `rects` kolejno dla testu rysowania okręgów i dla testu rysowania kwadratów z rotacją. Zmienna `numberOfShapes` określa liczbę rysowanych prymitywów na ekranie. Po uruchomieniu aplikacji odczyt klatek na sekundę pojawi się w konsoli.
+Przed zbudowaniem aplikacji, w głównym pliku: 
+* ReactNative - `DrawingShapes/ReactDrawingShapes/App.js`
+* Flutter - `DrawingShapes/flutter_drawing_shapes/lib/main.dart`
+* AndroidSDK - `DrawingShapes/AndroidDrawingShapes/app/src/main/java/com/example/androiddrawingshapes/ShapesView.java`
+* SwiftUI - `DrawingShapes/SwiftDrawingShapes/SwiftDrawingShapes/ContentView.swift`
+
+można dostować parametry. Zmienna `mode` określa typ testu. Przyjmuje dwie wartości: `ovals` albo `rects` kolejno dla testu rysowania okręgów i dla testu rysowania kwadratów z rotacją. Zmienna `numberOfShapes` określa liczbę rysowanych prymitywów na ekranie. Po uruchomieniu aplikacji odczyt klatek na sekundę pojawi się w konsoli.
