@@ -4,10 +4,7 @@ import 'dart:math';
 
 void main() => runApp(MyApp());
 
-// NOTE: Improving performance: https://itnext.io/procedural-textures-with-flutter-efcf546cd1fc
-
 class MyApp extends StatelessWidget {
-  // Check if app with Material widget is slower or not
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -75,11 +72,6 @@ class _FractalState extends State<Fractal> with SingleTickerProviderStateMixin {
       ),
       body: Center(
         child: Column(
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             SizedBox(
