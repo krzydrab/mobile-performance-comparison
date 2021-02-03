@@ -36,11 +36,16 @@ flutter run --release
 
 ### Testy algorytmów
 
-Po uruchomieniu aplikacja wybieramy algorytm, który chcemy przetestować z listy i wciskamy przycisk "Start". Test zostanie przeprowadzony autmatycznie, a wynik ukaże się na ekranie.
+Po uruchomieniu aplikacja wybieramy algorytm, który chcemy przetestować z listy i wciskamy przycisk "Start". Test zostanie przeprowadzony automatycznie, a wynik ukaże się na ekranie.
 
-### Testy tnterfejsu użytkownika
+### Testy interfejsu użytkownika
 
-Przed zbudowaniem aplikacji, w głównym pliku danego projektu można dostować typ testu. 
+Przed zbudowaniem aplikacji w pliku
+* ReactNative - `InterfaceBuilding/ReactInterfaceBuilding/App.js`
+* Flutter - `InterfaceBuilding/flutter_interface_building/lib/main.dart`
+* AndroidSDK - `InterfaceBuilding/AndroidInterfaceBulding/app/src/main/java/com/example/androidinterfacebulding/MainActivity.java`
+* SwiftUI - `InterfaceBuilding/SwiftInterfaceBulding/SwiftInterfaceBulding/ContentView.swift`
+można dostować typ testu. 
 
 Zmienna `testType` określa jaki to rodzaj testu i może przyjąć następujące wartości:
 * Visibility - test dodawania i usuwania elementów
@@ -54,7 +59,7 @@ Po zbudowaniu i uruchomieniu aplikacji test zostanie automatycznie przeprowadzon
 
 ### Test rysowania fraktala
 
-Przed zbudowaniem aplikacji, w pliku: 
+Przed zbudowaniem aplikacji w pliku: 
 * ReactNative - `Fractal/ReactNativeFractal/src/julia.js`
 * Flutter - `Fractal/flutter_fractal_fast/lib/main.dart`
 * AndroidSDK - `Fractal/AndroidFractal/app/src/main/java/com/example/androidfractal/FractalView.java`
@@ -65,7 +70,7 @@ Po uruchomieniu odczyt klatek na sekundę pojawi się w konsoli.
 
 ### Test rysowania prymitywów
 
-Przed zbudowaniem aplikacji, w głównym pliku: 
+Przed zbudowaniem aplikacji w pliku: 
 * ReactNative - `DrawingShapes/ReactDrawingShapes/App.js`
 * Flutter - `DrawingShapes/flutter_drawing_shapes/lib/main.dart`
 * AndroidSDK - `DrawingShapes/AndroidDrawingShapes/app/src/main/java/com/example/androiddrawingshapes/ShapesView.java`
