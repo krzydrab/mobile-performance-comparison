@@ -15,12 +15,18 @@ const TestType = {
   FullRebuild: "FullRebuild",
   NoChange: "NoChange"
 }
+
+const ComponentType = {
+  Text: "Text",
+  Button: "Button",
+}
 export default class App extends Component {
   constructor(props) {
     super(props);
 
     // ====== Test parameters ======
-    this.mode = TestType.FullRebuild;
+    this.mode = TestType.Visibility;
+    this.componentType = ComponentType.Button;
     this.singleTestDuration = 10; // in sec
     this.intervalBetweenTests = 5; // in sec
     // =============================
@@ -181,8 +187,9 @@ export default class App extends Component {
             )}
           </View>
         :
-          // this.state.items.map((i) => <Text key={i.id}>Row: #{i.value}</Text>)
-          this.state.items.map((i) => <Button key={i.id} title={`Row: ${i.value}`} onPress={this.noOpFn}/>)
+          this.componentType == ComponentType.Text 
+            ? this.state.items.map((i) => <Text key={i.id}>Row: #{i.value}</Text>)
+            : this.state.items.map((i) => <Button key={i.id} title={`Row: ${i.value}`} onPress={this.noOpFn}/>)
         }
       </View>
     );

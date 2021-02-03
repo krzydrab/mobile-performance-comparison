@@ -15,7 +15,7 @@ enum TestType {
 struct ContentView: View {
     
     // ====== Test parameters ======
-    private let testType: TestType = TestType.FullRebuild;
+    private let testType: TestType = TestType.Visibility;
     private static let singleTestDuration = TimeInterval(10); // in sec
     // =============================
     

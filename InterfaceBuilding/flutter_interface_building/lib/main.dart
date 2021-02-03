@@ -28,10 +28,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 enum TestType { Visibility, Swap, FullRebuild, NoChange }
+enum ComponentType { Text, Button }
 
 class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMixin  {
   // ====== Test parameters ======
-  TestType _testType = TestType.FullRebuild;
+  TestType _testType = TestType.Swap;
+  ComponentType _componentType = ComponentType.Button;
   int singleTestDuration = 10; // in sec
   // =============================
 
@@ -90,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
           }
         }
       });
-    this._tester.nextTest();
+    this._rows = this._tester.nextTest();
     controller.forward();
   }
 
@@ -103,8 +105,9 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
           children: 
             _showResults
               ? _tester.results.map((r) => Text("N: ${r.n}, FPS: ${r.fps}, TTM: ${r.timeToModify}")).toList()
-              // : _rows.map((e) => Text("Row: ${e.value}")).toList(),
-              : _rows.map((e) => FlatButton(child: Text("Row: ${e.value}"), onPressed: this.noOpFn)).toList(),
+              : this._componentType == ComponentType.Text 
+                ? _rows.map((e) => Text("Row: ${e.value}")).toList()
+                : _rows.map((e) => FlatButton(child: Text("Row: ${e.value}"), onPressed: this.noOpFn)).toList(),
         ),
       ),
     );

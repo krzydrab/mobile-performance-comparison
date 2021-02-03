@@ -5,16 +5,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Choreographer;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
-    public enum TestType { Visibility, Swap, FullRebuild }
+    public enum TestType { Visibility, Swap, FullRebuild, NoChange }
+    public enum ComponentType { Text, Button }
 
     // ====== Test parameters ======
-    int NUMBER_OF_ROWS = 150;
-    int NUMBER_OF_CHANGES = 80;
+    int NUMBER_OF_ROWS = 410;
+    int NUMBER_OF_CHANGES = 10;
     TestType testType = TestType.Visibility;
+    ComponentType componentType = ComponentType.Button;
     // =============================
 
     class RowData {
@@ -37,7 +40,10 @@ public class MainActivity extends AppCompatActivity {
     private RowData[] generateRows() {
         RowData[] rows = new RowData[NUMBER_OF_ROWS];
         for(int i = 0 ; i < rows.length ; i++) {
-            TextView view = new TextView(this);
+            // NOTE: Button inherits from TextView that's why it works
+            TextView view = this.componentType == ComponentType.Text
+                ? new TextView(this)
+                : new Button(this);
             rows[i] = new RowData(view);
         }
         return rows;
@@ -107,7 +113,9 @@ public class MainActivity extends AppCompatActivity {
                         that.fullRebuild();
                         break;
                 }
-                that.rebuildUi();
+                if(testType != TestType.NoChange) {
+                    that.rebuildUi();
+                }
                 Choreographer.getInstance().postFrameCallback(that.frameCallback);
             }
         };

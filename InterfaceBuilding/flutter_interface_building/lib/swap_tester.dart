@@ -7,7 +7,7 @@ import 'tester.dart';
 class SwapTester extends Tester {
   List<int> tests = Platform.isIOS
     ? [5, 25, 50, 75, 100, 125, 150, 175, 200]
-    : [0, 10, 20, 30, 40, 50, 60, 70, 80];
+    : [1, 10, 20, 30, 40, 50, 60, 70, 80];
   int nbOfItems = Platform.isIOS ? 800 : 150;
   int nbOfChanges = 0;
   List<RowData> rows;

@@ -16,8 +16,10 @@ import androidx.annotation.Nullable;
 public class ShapesView extends View {
     enum MODE { OVALS, RECTS };
 
-    MODE mode = MODE.RECTS;
-    int numberOfShapes = 3000;
+    // ===== TEST PARAMETERS =====
+    MODE mode = MODE.OVALS;
+    int numberOfShapes = 1000;
+    // ===========================
 
     int width = 0;
     int height = 0;
@@ -72,6 +74,7 @@ public class ShapesView extends View {
     protected void drawRects(Canvas canvas) {
         Paint paint = new Paint();
         paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth((float) 2.0);
 
         for(int i = 0 ; i < this.numberOfShapes; i++) {
             int left = (int)(Math.random() * (this.width - this.rectSize));

@@ -22,7 +22,7 @@ class VisibilityChangeTester extends Tester {
     this.invisibleRowsIds = this.visibleRowsIds.sublist(0, this.nbOfChanges);
     this.invisibleRowsIds.forEach((id) => this.rows[id].visibility = false);
     this.visibleRowsIds.removeRange(0, this.nbOfChanges);
-    return this.rows.where((e) => e.visibility);
+    return this.rows.where((e) => e.visibility).toList();
   }
 
   List<RowData> updateRows() {
@@ -36,7 +36,7 @@ class VisibilityChangeTester extends Tester {
     );
     this.invisibleRowsIds.forEach((id) => this.rows[id].visibility = false);
     this.timeToModify += stopwatch.elapsedMilliseconds;
-    return this.rows.where((e) => e.visibility);
+    return this.rows.where((e) => e.visibility).toList();
   }
 
   void testEnded(double fps) {
